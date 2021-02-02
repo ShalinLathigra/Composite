@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Components/Player/Player_Legs.gd" type="Script" id=1]
+[ext_resource path="res://Components/Player/PlayerFrames.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://Components/Gun/Instanceable/Gun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Player/Player_Body.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.12527
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 16 )
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Entity",
+]]
+script = ExtResource( 1 )
+friction = 0.25
+
+[node name="Legs" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -8 )
+frames = ExtResource( 2 )
+animation = "idle"
+
+[node name="Body" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -24 )
+frames = ExtResource( 2 )
+animation = "idle"
+script = ExtResource( 5 )
+
+[node name="Gun" parent="Body" instance=ExtResource( 3 )]
+position = Vector2( 0, 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
+shape = SubResource( 1 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -16 )
+shape = SubResource( 2 )

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Components/Gun/Instanceable/Gun.gd" type="Script" id=1]
+[ext_resource path="res://Components/Gun/Resources/Gun_Base.tres" type="Resource" id=2]
+[ext_resource path="res://Components/Gun/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=3]
+
+[node name="Gun" type="Node2D"]
+script = ExtResource( 1 )
+res = ExtResource( 2 )
+
+[node name="Gun" type="AnimatedSprite" parent="."]
+frames = ExtResource( 3 )
+animation = "Idle"
+
+[node name="Muzzle" type="Position2D" parent="."]
+position = Vector2( 16, 0 )
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
