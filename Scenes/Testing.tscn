@@ -68,7 +68,7 @@ target = NodePath("../Player")
 follow_rate = 0.31
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 100, 0 )
+position = Vector2( -0.5, -41 )
 
 [node name="Enemies" type="Node2D" parent="."]
 

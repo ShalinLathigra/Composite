@@ -1,26 +1,115 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Components/Projectiles/Resources/Bullet_Base.tres" type="Resource" id=1]
-[ext_resource path="res://Components/Projectiles/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://Components/Projectiles/Instanceable/Bullet.gd" type="Script" id=3]
+[ext_resource path="res://Imports/Sprites/Projectiles/base_0-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Components/Projectiles/Resources/Bullet_Resource.gd" type="Script" id=2]
+[ext_resource path="res://Imports/Sprites/Projectiles/base_1.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+class_name Bullet
+
+export (Resource) var res
+
+onready var anims = {
+	GLOBAL.SHOOT : \"moving\",
+	GLOBAL.HIT : \"hit\"
+}
+
+var dir = Vector2(0,0)
+
+onready var state = GLOBAL.SHOOT
+
+func _ready():
+	$Sprite.frames = res.frames
+	
+	
+func _process(_delta):
+	$Sprite.play(anims[state])
+	$Sprite.flip_v = dir.x < 0
+	
+func _physics_process(delta):
+	if (state == GLOBAL.SHOOT):
+		position += dir * res.move_rate * delta
+
+func _on_Sprite_animation_finished():
+	if (state == GLOBAL.HIT):
+		queue_free()
+
+
+func _on_Bullet_body_entered(body):
+	state = GLOBAL.HIT
+	if (body.is_in_group(\"Entity\")):
+		collision_mask = 0
+		collision_layer = 0
+		body.receive_hit(res.damage, res.trauma)
+
+
+func _on_Bullet_area_entered(area):
+	state = GLOBAL.HIT
+	if (area.is_in_group(\"Entity\")):
+		collision_mask = 0
+		collision_layer = 0
+		area.receive_hit(res.damage, res.trauma)
+"
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "moving",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 2 )
+frames = SubResource( 3 )
+move_rate = 600.0
+damage = 1
+trauma = 0.0
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "moving",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 8, 6 )
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource( 3 )
-res = ExtResource( 1 )
+script = SubResource( 1 )
+res = SubResource( 4 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 8, 0 )
-frames = ExtResource( 2 )
+frames = SubResource( 6 )
 animation = "moving"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 7 )
 [connection signal="area_entered" from="." to="." method="_on_Bullet_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
 [connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]

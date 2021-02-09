@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Components/Player/Player_Legs.gd" type="Script" id=1]
 [ext_resource path="res://Components/Player/PlayerFrames.tres" type="SpriteFrames" id=2]
@@ -7,7 +7,8 @@
 [ext_resource path="res://Components/Player/Player_Body.gd" type="Script" id=5]
 [ext_resource path="res://Components/Cheats/Circle_Shadow.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Components/Gun/Resources/Gun_Base.tres" type="Resource" id=7]
-[ext_resource path="res://Components/Gun/Resources/Pistol_Fast.tres" type="Resource" id=8]
+[ext_resource path="res://Components/Gun/Resources/Gun_Fast.tres" type="Resource" id=8]
+[ext_resource path="res://Components/Gun/Resources/Gun_Big.tres" type="Resource" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
@@ -39,7 +40,7 @@ scale = Vector2( 1.25, 1.25 )
 frames = ExtResource( 2 )
 animation = "idle"
 script = ExtResource( 5 )
-gun_modes = [ ExtResource( 7 ), ExtResource( 8 ) ]
+gun_modes = [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ]
 
 [node name="Gun" parent="Body" instance=ExtResource( 3 )]
 position = Vector2( 0, 4 )

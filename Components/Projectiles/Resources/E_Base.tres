@@ -3,6 +3,8 @@
 [ext_resource path="res://Components/Projectiles/Resources/Bullet_Resource.gd" type="Script" id=1]
 [ext_resource path="res://Components/Projectiles/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=2]
 
+
+
 [resource]
 script = ExtResource( 1 )
 frames = ExtResource( 2 )

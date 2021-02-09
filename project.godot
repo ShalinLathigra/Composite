@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Gun/Resources/Gun_Resource.gd"
 }, {
+"base": "Area2D",
+"class": "Rocket",
+"language": "GDScript",
+"path": "res://Components/Projectiles/Instanceable/Rocket.gd"
+}, {
 "base": "Resource",
 "class": "Unit_Resource",
 "language": "GDScript",
@@ -39,6 +44,7 @@ _global_script_class_icons={
 "Bullet_Resource": "",
 "Gun_Base": "",
 "Gun_Resource": "",
+"Rocket": "",
 "Unit_Resource": ""
 }
 

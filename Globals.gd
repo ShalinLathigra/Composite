@@ -13,10 +13,12 @@ enum {
 	DIE		# Stop everything, die
 	}
 enum BULLETS {
-	BASE
+	BASE,
+	ROCKET
 }
 const bullets = {
-	BULLETS.BASE : preload("res://Components/Projectiles/Instanceable/Bullet.tscn")
+	BULLETS.BASE : preload("res://Components/Projectiles/Instanceable/Bullet.tscn"),
+	BULLETS.ROCKET : preload("res://Components/Projectiles/Instanceable/Rocket.tscn")
 	}
 
 const ally_frames = preload("res://Components/Units/SpriteFrames/AllyFrames.tres")
@@ -39,9 +41,9 @@ func register_unit(unit : NodePath, friendly : bool = true) -> void:
 		enemies.push_back(unit)
 		
 func unregister_unit(unit : NodePath, friendly : bool = true) -> void:
-	if (friendly):
+	if (friendly and players.find(unit) >= 0):
 		players.remove(players.find(unit))
-	else:
+	elif enemies.find(unit) >= 0:
 		enemies.remove(enemies.find(unit))
 		
 	get_node(unit).call_deferred("free")

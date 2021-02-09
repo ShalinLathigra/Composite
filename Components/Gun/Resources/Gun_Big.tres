@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Components/Gun/Resources/Gun_Resource.gd" type="Script" id=1]
+[ext_resource path="res://Components/Gun/SpriteFrames/BigFrames.tres" type="SpriteFrames" id=2]
+
+[resource]
+resource_name = "Gun_Big"
+script = ExtResource( 1 )
+frames = ExtResource( 2 )
+shots_per_second = 1.0
+mag_cap = 3
+ammo_cap = 13
+mag = 3
+ammo = 13
+max_reload_time = 2.0
+reload_time = 0.0
+shake = 5.0
+muzzle_dist = 16.0
+trauma = 0.5
+hold_distance = 24.0
+bullet_type = 2

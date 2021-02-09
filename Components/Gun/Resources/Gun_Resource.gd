@@ -16,5 +16,5 @@ export (float, 0.5, 32.0) var muzzle_dist
 export (float, 0.05, 0.5) var trauma
 export (float, 8.0, 32.0) var hold_distance
 
-export (int, FLAGS, "BASE") var bullet_type
+export (int, FLAGS, "BASE", "ROCKET") var bullet_type
 export (Resource) var bullet_override_resource

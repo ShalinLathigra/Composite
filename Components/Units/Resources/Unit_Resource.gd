@@ -2,14 +2,14 @@ extends Resource
 class_name Unit_Resource
 
 export (int, 1, 100) var health
-export (float, 25, 300) var speed
+export (float, 0, 300) var speed
 export (Vector2) var override_scale = Vector2(1,1)
 
-export (float, 600, 1200) var chase_rad
-export (float, 1.0, 10.0) var max_chase_timer
-export (float, 0.5, 2.0) var attack_cooldown
-export (int, 1, 100) var attack_damage
-export (float, 0.05, 1.0) var hit_trauma
+export (float, 0, 1200) var chase_rad
+export (float, 0.0, 10.0) var max_chase_timer
+export (float, 0.0, 2.0) var attack_cooldown
+export (int, 0, 100) var attack_damage
+export (float, 0.0, 1.0) var hit_trauma
 export (float, 0.0, 1.0) var death_shake
 
 
