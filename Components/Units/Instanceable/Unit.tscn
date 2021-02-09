@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Components/Units/Spriteframes/EnemyFrames.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Components/Cheats/Circle_Shadow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Components/Units/Instanceable/Unit.gd" type="Script" id=3]
+[ext_resource path="res://Components/Units/Resources/Unit_Base.tres" type="Resource" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
+[node name="Enemy" type="KinematicBody2D" groups=[
+"Entity",
+]]
+z_index = 1
+collision_layer = 2
+script = ExtResource( 3 )
+res = ExtResource( 4 )
+friendly = false
+
+[node name="Circle_Shadow" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "idle"
+
+[node name="PunchHitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchHitBox"]
+shape = SubResource( 2 )
+[connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]
+[connection signal="body_entered" from="PunchHitBox" to="." method="_on_PunchHitBox_body_entered"]
+[connection signal="body_exited" from="PunchHitBox" to="." method="_on_PunchHitBox_body_exited"]

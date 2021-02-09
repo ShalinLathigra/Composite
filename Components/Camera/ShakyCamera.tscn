@@ -19,6 +19,8 @@ export var noise_period = 4.0
 export var noise_octaves = 2.0
 
 func _ready():
+	if (!GLOBAL.camera):
+		GLOBAL.camera = self
 	randomize()
 	noise.seed = randi()
 	noise.period = noise_period
@@ -54,6 +56,7 @@ func shake():
 
 [node name="ShakyCamera" type="Camera2D"]
 current = true
+zoom = Vector2( 0.5, 0.5 )
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = SubResource( 1 )

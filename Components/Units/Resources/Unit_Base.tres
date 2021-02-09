@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Components/Units/Resources/Unit_Resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+health = 2
+speed = 25.0
+override_scale = Vector2( 1, 1 )
+chase_rad = 600.0
+max_chase_timer = 0.0
+attack_cooldown = 0.0
+attack_damage = 0
+hit_trauma = 0.0
+death_shake = 0.3
+type = 0
+hurt_frames = [ 1 ]
+bullet_type = 0
+attack_start_range = 0.0
+attack_end_range = 0.0

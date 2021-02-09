@@ -1,9 +1,8 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Components/Gun/Resources/Gun_Resource.gd" type="Script" id=1]
 [ext_resource path="res://Imports/Sprites/Guns/base_1.png" type="Texture" id=2]
 [ext_resource path="res://Imports/Sprites/Guns/base_0.png" type="Texture" id=3]
-[ext_resource path="res://Components/Projectiles/Resources/Bullet_Base.tres" type="Resource" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,12 +20,12 @@ animations = [ {
 [resource]
 script = ExtResource( 1 )
 frames = SubResource( 1 )
-shots_per_second = 6.0
-mag_cap = 6
-ammo_cap = 120
-reload_time = 1.0
+shots_per_second = 8.0
+mag_cap = 16
+ammo_cap = 240
+reload_time = 1.5
 shake = 1.5
 muzzle_dist = 0.5
-trauma = 0.2
-hold_distance = 8.0
-bullet_res = ExtResource( 4 )
+trauma = 0.4
+hold_distance = 16.0
+bullet_type = 1

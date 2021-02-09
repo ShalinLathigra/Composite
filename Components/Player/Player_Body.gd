@@ -10,21 +10,35 @@ onready var anims = {
 
 onready var gun_anchor = Vector2(0, -4.0)
 
+func _ready():
+	$Gun.bullet_layer = 8
+	$Gun.bullet_mask = 6
+
 func _process(_delta):
-	var to_mouse = (get_global_mouse_position() - global_position).normalized()
 	
-	# Handle Player Body Direction
-	body_state = GLOBAL.IDLE
-	flip_h = (to_mouse.x) < 0.0
-	
-	# Handle Rotation of Gun
-	$Gun.rotation_degrees = rad2deg(to_mouse.angle())
-	
-	
-	# Handle Shooting
-	if (Input.is_action_pressed("player_shoot")):
-		$Gun.shoot()
-		body_state = GLOBAL.SHOOT
+	if (self.body_state != GLOBAL.HURT):
+		var to_mouse = (get_global_mouse_position() - global_position).normalized()
+		
+		# Handle Player Body Direction
+		body_state = GLOBAL.IDLE
+		flip_h = (to_mouse.x) < 0.0
+		
+		# Handle Rotation of Gun
+		$Gun.rotation_degrees = rad2deg(to_mouse.angle())
+		
+		# Handle Shooting
+		if (Input.is_action_pressed("player_shoot")):
+			$Gun.shoot(true)
+			body_state = GLOBAL.SHOOT
 
 	# Play Current Body Animation
 	play(anims[body_state])
+
+
+func _on_Body_animation_finished():
+	if (body_state == GLOBAL.HURT):
+		body_state = GLOBAL.IDLE
+
+
+func receive_hit(damage : int, trauma : float):
+	get_node("../Player").receive_hit(damage, trauma)

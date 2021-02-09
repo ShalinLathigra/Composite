@@ -1,29 +1,39 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Components/Player/Player_Legs.gd" type="Script" id=1]
 [ext_resource path="res://Components/Player/PlayerFrames.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://Components/Gun/Instanceable/Gun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Gun/Instanceable/Gun_Base.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Player/PlayerHurtBox.gd" type="Script" id=4]
 [ext_resource path="res://Components/Player/Player_Body.gd" type="Script" id=5]
+[ext_resource path="res://Components/Cheats/Circle_Shadow.tscn" type="PackedScene" id=6]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 7.12527
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 8.0
+height = 8.0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 16 )
+extents = Vector2( 10, 28 )
 
-[node name="Player" type="KinematicBody2D" groups=[
-"Entity",
-]]
+[node name="Player" type="KinematicBody2D"]
+z_index = 2
+collision_mask = 0
 script = ExtResource( 1 )
 friction = 0.25
+dodge_cooldown = 1000.0
+dodge_dist = 600.0
+dodge_time = 250.0
+
+[node name="Circle_Shadow" parent="." instance=ExtResource( 6 )]
 
 [node name="Legs" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, 24.8728 )
+scale = Vector2( 1.25, 2 )
 frames = ExtResource( 2 )
 animation = "idle"
 
 [node name="Body" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -5.1272 )
+scale = Vector2( 1.25, 1.25 )
 frames = ExtResource( 2 )
 animation = "idle"
 script = ExtResource( 5 )
@@ -32,12 +42,18 @@ script = ExtResource( 5 )
 position = Vector2( 0, 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, 28.8728 )
 shape = SubResource( 1 )
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="." groups=[
+"Entity",
+]]
+position = Vector2( 0, 40.8728 )
 collision_mask = 0
+script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, -16 )
+position = Vector2( 0.117981, -28.2704 )
 shape = SubResource( 2 )
+[connection signal="animation_finished" from="Legs" to="." method="_on_Legs_animation_finished"]
+[connection signal="animation_finished" from="Body" to="Body" method="_on_Body_animation_finished"]

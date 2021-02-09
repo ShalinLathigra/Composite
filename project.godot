@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Gun_Resource",
 "language": "GDScript",
 "path": "res://Components/Gun/Resources/Gun_Resource.gd"
+}, {
+"base": "Resource",
+"class": "Unit_Resource",
+"language": "GDScript",
+"path": "res://Components/Units/Resources/Unit_Resource.gd"
 } ]
 _global_script_class_icons={
 "Bullet": "",
 "Bullet_Resource": "",
 "Gun_Base": "",
-"Gun_Resource": ""
+"Gun_Resource": "",
+"Unit_Resource": ""
 }
 
 [application]
@@ -101,6 +107,11 @@ player_shoot={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+player_dodge={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -108,7 +119,9 @@ player_shoot={
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Projectiles"
 2d_physics/layer_4="Player_Projectiles"
+2d_physics/layer_5="Ally"
 2d_physics/layer_6="Walls"
+2d_physics/layer_7="EnemyHitBoxes"
 
 [rendering]
 

@@ -12,7 +12,7 @@ res = ExtResource( 2 )
 frames = ExtResource( 3 )
 animation = "Idle"
 
-[node name="Muzzle" type="Position2D" parent="."]
+[node name="Muzzle" type="Position2D" parent="Gun"]
 position = Vector2( 16, 0 )
 
 [node name="ReloadTimer" type="Timer" parent="."]
