@@ -19,12 +19,16 @@ animations = [ {
 } ]
 
 [resource]
+resource_name = "Gun_Slow"
 script = ExtResource( 3 )
 frames = SubResource( 1 )
 shots_per_second = 2.0
 mag_cap = 6
 ammo_cap = 60
-reload_time = 2.5
+mag = 6
+ammo = 60
+max_reload_time = 0.0
+reload_time = 0.0
 shake = 1.5
 muzzle_dist = 8.0
 trauma = 0.4

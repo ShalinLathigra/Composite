@@ -5,7 +5,10 @@ export (SpriteFrames) var frames
 export (float, 0.5, 50) var shots_per_second
 export (int, 1, 100) var mag_cap
 export (int, 1, 300) var ammo_cap
-export (float, 0.1, 10) var reload_time
+export (int) var mag = mag_cap
+export (int) var ammo = ammo_cap
+export (float, 0.1, 10) var max_reload_time
+export (float) var reload_time
 #export (int, 1, 10) var bullets_per_shot
 
 export (float, 0.5, 32.0) var shake

@@ -18,12 +18,16 @@ animations = [ {
 } ]
 
 [resource]
+resource_name = "Gun_Base"
 script = ExtResource( 1 )
 frames = SubResource( 1 )
 shots_per_second = 8.0
-mag_cap = 16
+mag_cap = 3
 ammo_cap = 240
-reload_time = 1.5
+mag = 3
+ammo = 240
+max_reload_time = 1.5
+reload_time = 0.0
 shake = 1.5
 muzzle_dist = 0.5
 trauma = 0.4
