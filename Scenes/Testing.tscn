@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Imports/Sprites/Test_tile.png" type="Texture" id=1]
 [ext_resource path="res://Imports/Sprites/Test_tile_no_collider.png" type="Texture" id=2]
 [ext_resource path="res://Components/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Components/Camera/ShakyCamera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Units/Instanceable/M_FastUnit.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Components/Units/Instanceable/R_Unit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Units/Instanceable/M_SlowUnit.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Components/Units/Instanceable/M_Unit.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -71,6 +75,120 @@ follow_rate = 0.31
 position = Vector2( -0.5, -41 )
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="FastMeleeUnit" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 287.725, -99.6607 )
+
+[node name="FastMeleeUnit2" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 217.88, -196.492 )
+
+[node name="FastMeleeUnit3" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 354.396, -204.492 )
+
+[node name="FastMeleeUnit4" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 425.829, -242.59 )
+
+[node name="FastMeleeUnit5" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 417.829, -107.661 )
+
+[node name="FastMeleeUnit6" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -460.003, 235.218 )
+
+[node name="FastMeleeUnit7" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -426.668, 166.96 )
+
+[node name="FastMeleeUnit8" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -348.885, 227.218 )
+
+[node name="FastMeleeUnit9" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -328.249, 162.134 )
+
+[node name="SlowMeleeUnit" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( 360.746, 230.519 )
+
+[node name="SlowMeleeUnit4" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( -420.256, -134.583 )
+
+[node name="SlowMeleeUnit5" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( -339.298, -102.835 )
+
+[node name="SlowMeleeUnit6" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( -348.823, -169.506 )
+
+[node name="SlowMeleeUnit7" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( -382.158, -228.24 )
+
+[node name="SlowMeleeUnit2" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( 240.103, 176.547 )
+
+[node name="SlowMeleeUnit3" parent="Enemies" instance=ExtResource( 7 )]
+position = Vector2( 181.369, 195.596 )
+
+[node name="BaseRangedUnit" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -369.459, 35.2684 )
+
+[node name="BaseRangedUnit2" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -401.207, -23.4655 )
+
+[node name="BaseRangedUnit3" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 395.668, 114.638 )
+
+[node name="BaseRangedUnit4" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 363.921, 55.9046 )
+
+[node name="BaseRangedUnit5" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 390.906, 171.785 )
+
+[node name="BaseRangedUnit6" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 359.158, 113.051 )
+
+[node name="BaseRangedUnit7" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -396.445, 94.0022 )
+
+[node name="BaseMeleeUnit" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -61.5029, 200.358 )
+
+[node name="BaseMeleeUnit2" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -15.4683, 227.344 )
+
+[node name="BaseMeleeUnit3" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -72.6147, 230.519 )
+
+[node name="BaseMeleeUnit4" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -107.538, 205.12 )
+
+[node name="BaseMeleeUnit5" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -151.985, 228.931 )
+
+[node name="BaseMeleeUnit6" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -142.46, 192.421 )
+
+[node name="BaseMeleeUnit7" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -194.845, 227.344 )
+
+[node name="BaseMeleeUnit8" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -183.733, 194.008 )
+
+[node name="BaseMeleeUnit9" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( -223.418, 217.819 )
+
+[node name="BaseMeleeUnit10" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( 17.8671, 198.771 )
+
+[node name="BaseMeleeUnit11" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( 65.4891, 233.694 )
+
+[node name="BaseMeleeUnit12" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( 25.8041, 233.694 )
+
+[node name="BaseMeleeUnit13" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( 60.7269, 194.008 )
+
+[node name="BaseMeleeUnit14" parent="Enemies" instance=ExtResource( 8 )]
+position = Vector2( 114.699, 227.344 )
+
+[node name="BaseRangedUnit8" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -428.193, 35.2684 )
 
 [node name="Allies" type="Node2D" parent="."]
 

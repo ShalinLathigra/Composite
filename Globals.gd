@@ -33,6 +33,7 @@ func add_trauma(trauma):
 		
 onready var players = []
 onready var enemies = []
+onready var dead_units = []
 
 func register_unit(unit : NodePath, friendly : bool = true) -> void:
 	if (friendly):
@@ -45,8 +46,8 @@ func unregister_unit(unit : NodePath, friendly : bool = true) -> void:
 		players.remove(players.find(unit))
 	elif enemies.find(unit) >= 0:
 		enemies.remove(enemies.find(unit))
-		
-	get_node(unit).call_deferred("free")
+	
+	dead_units.push_back(unit)	
 
 func get_nearest(pos : Vector2, friendly : bool = true):	
 	var targets = null

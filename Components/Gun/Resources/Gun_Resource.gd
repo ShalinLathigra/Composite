@@ -3,6 +3,7 @@ class_name Gun_Resource
 
 export (SpriteFrames) var frames
 export (float, 0.5, 50) var shots_per_second
+export (int, 0, 50) var bullets_per_shot
 export (int, 1, 100) var mag_cap
 export (int, 1, 300) var ammo_cap
 export (int) var mag = mag_cap

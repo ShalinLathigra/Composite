@@ -32,6 +32,7 @@ func _on_Sprite_animation_finished():
 func _on_Bullet_body_entered(body):
 	state = GLOBAL.HIT
 	if (body.is_in_group("Entity")):
+
 		collision_mask = 0
 		collision_layer = 0
 		body.receive_hit(res.damage, res.trauma)

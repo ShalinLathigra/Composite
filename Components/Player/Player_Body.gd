@@ -15,7 +15,7 @@ onready var gun_anchor = Vector2(0, -4.0)
 
 func _ready():
 	$Gun.bullet_layer = 8
-	$Gun.bullet_mask = 6
+	$Gun.bullet_mask = 2
 
 func _process(_delta):
 	

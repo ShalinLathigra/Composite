@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Imports/Sprites/Projectiles/base_0-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Components/Projectiles/Resources/Bullet_Resource.gd" type="Script" id=2]
-[ext_resource path="res://Imports/Sprites/Projectiles/base_1.png" type="Texture" id=3]
+[ext_resource path="res://Components/Projectiles/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=4]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Area2D
@@ -52,64 +51,30 @@ func _on_Bullet_area_entered(area):
 		area.receive_hit(res.damage, res.trauma)
 "
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ SubResource( 2 ) ],
-"loop": true,
-"name": "moving",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-} ]
-
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
-frames = SubResource( 3 )
+frames = ExtResource( 4 )
 move_rate = 600.0
 damage = 1
 trauma = 0.0
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=6]
-animations = [ {
-"frames": [ SubResource( 5 ) ],
-"loop": true,
-"name": "moving",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 8, 6 )
+[sub_resource type="CircleShape2D" id=3]
+radius = 11.357
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 2147483648
 collision_mask = 0
 script = SubResource( 1 )
-res = SubResource( 4 )
+res = SubResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 8, 0 )
-frames = SubResource( 6 )
+frames = ExtResource( 4 )
 animation = "moving"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 3 )
 [connection signal="area_entered" from="." to="." method="_on_Bullet_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
 [connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]

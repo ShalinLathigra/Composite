@@ -59,11 +59,16 @@ func process_input():
 			elif (Input.is_action_pressed("player_walk")):
 				speed = walk_speed
 				leg_state = GLOBAL.WALK
+			if ($Body.body_state == GLOBAL.SHOOT):
+				speed *= 0.9
 			vel = direction.normalized() * speed
 		else:
 			leg_state = GLOBAL.IDLE
 
 func receive_hit(damage : int, trauma : float):
+	if (leg_state == GLOBAL.DODGE):
+		return
+		
 	self.health -= damage
 	
 	get_node(GLOBAL.camera).add_trauma(trauma)
@@ -88,9 +93,6 @@ func _on_Legs_animation_finished():
 export (float) var dodge_dist;
 export (float) var dodge_time;
 func dodge(_delta):
-	# we know how far we're moving
-	# we know how long a dodge should last
-	# Do I use a tween, alter the distance to be until I collide?
 	if (OS.get_ticks_msec() > time_of_last_dodge + dodge_time):
 		time_of_last_dodge = OS.get_ticks_msec()
 		leg_state = GLOBAL.IDLE

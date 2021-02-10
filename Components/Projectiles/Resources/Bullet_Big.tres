@@ -1,27 +1,6 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Imports/Sprites/Projectiles/big_0-Sheet.png" type="Texture" id=2]
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ SubResource( 1 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ) ],
-"loop": true,
-"name": "moving",
-"speed": 5.0
-} ]
+[ext_resource path="res://Components/Projectiles/SpriteFrames/BigFrames.tres" type="SpriteFrames" id=1]
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends Resource
@@ -35,7 +14,7 @@ export (float, 0.05, 1.0) var trauma
 
 [resource]
 script = SubResource( 4 )
-frames = SubResource( 3 )
+frames = ExtResource( 1 )
 move_rate = 450.0
 damage = 5
 trauma = 0.5

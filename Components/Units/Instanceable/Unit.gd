@@ -55,10 +55,10 @@ func _ready():
 			gun.res.bullet_type = res.bullet_type
 		if (friendly):
 			gun.bullet_layer = 8
-			gun.bullet_mask = 6
+			gun.bullet_mask = 2
 		else:
 			gun.bullet_layer = 4
-			gun.bullet_mask = 1 + 8
+			gun.bullet_mask = 1
 			
 		call_deferred("add_child", gun)
 		
@@ -138,6 +138,7 @@ func die():
 	collision_layer = 0
 	get_node(GLOBAL.camera).add_trauma(res.death_shake)
 	GLOBAL.unregister_unit(self.get_path())
+	set_physics_process(false)
 
 
 func _process(_delta):
