@@ -4,10 +4,10 @@
 [ext_resource path="res://Imports/Sprites/Test_tile_no_collider.png" type="Texture" id=2]
 [ext_resource path="res://Components/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Components/Camera/ShakyCamera.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Components/Units/Instanceable/M_FastUnit.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Components/Units/Instanceable/R_Unit.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Components/Units/Instanceable/M_SlowUnit.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Components/Units/Instanceable/M_Unit.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_FastEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/R_Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_SlowEnemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_Enemy.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -69,10 +69,13 @@ tile_data = PoolIntArray( -1179680, 0, 0, -1179679, 0, 0, -1179678, 0, 0, -11796
 [node name="ShakyCamera" parent="." instance=ExtResource( 4 )]
 zoom = Vector2( 0.75, 0.75 )
 target = NodePath("../Player")
-follow_rate = 0.31
+follow_rate = 0.15
+max_lead = 150.0
+lead_dist = 200.0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( -0.5, -41 )
+dodge_cooldown = 750.0
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -8,6 +8,7 @@ resource_name = "Gun_Fast"
 script = ExtResource( 1 )
 frames = ExtResource( 2 )
 shots_per_second = 8.0
+slow_amount = 0.25
 bullets_per_shot = 3
 mag_cap = 96
 ammo_cap = 300

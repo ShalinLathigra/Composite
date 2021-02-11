@@ -59,8 +59,9 @@ func process_input():
 			elif (Input.is_action_pressed("player_walk")):
 				speed = walk_speed
 				leg_state = GLOBAL.WALK
+				
 			if ($Body.body_state == GLOBAL.SHOOT):
-				speed *= 0.9
+				speed *= $Body.get_slow_amount()
 			vel = direction.normalized() * speed
 		else:
 			leg_state = GLOBAL.IDLE

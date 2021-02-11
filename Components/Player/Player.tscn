@@ -22,7 +22,7 @@ z_index = 2
 collision_mask = 0
 script = ExtResource( 1 )
 friction = 0.25
-dodge_cooldown = 1000.0
+dodge_cooldown = 500.0
 dodge_dist = 600.0
 dodge_time = 250.0
 

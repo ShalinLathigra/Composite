@@ -20,9 +20,9 @@ const bullets = {
 	BULLETS.BASE : preload("res://Components/Projectiles/Instanceable/Bullet.tscn"),
 	BULLETS.ROCKET : preload("res://Components/Projectiles/Instanceable/Rocket.tscn")
 	}
-
-const ally_frames = preload("res://Components/Units/SpriteFrames/AllyFrames.tres")
-const enemy_frames = preload("res://Components/Units/SpriteFrames/EnemyFrames.tres")
+	
+const ally_frames = preload("res://Components/Units/Spriteframes/AllyFrames.tres")
+const enemy_frames = preload("res://Components/Units/Spriteframes/EnemyFrames.tres")
 
 var player = "/root/world/Player"
 var camera = "/root/world/ShakyCamera"
@@ -68,3 +68,7 @@ func get_nearest(pos : Vector2, friendly : bool = true):
 					nearest_dist = curr
 			
 	return nearest
+
+func _unhandled_key_input(event):
+	if (Input.is_action_just_pressed("debug_reset")):
+		get_tree().change_scene("res://Scenes/Testing.tscn")

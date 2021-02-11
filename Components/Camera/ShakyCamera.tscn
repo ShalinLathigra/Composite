@@ -18,6 +18,9 @@ var noise_y = 0
 export var noise_period = 4.0
 export var noise_octaves = 2.0
 
+export var max_lead = 100.0
+export var lead_dist = 50.0
+
 func _ready():
 	if (!GLOBAL.camera):
 		GLOBAL.camera = self
@@ -34,7 +37,11 @@ func add_trauma(t):
 	
 func _process(delta):
 	if (target):
-		global_position = lerp(global_position, get_node(target).position, follow_rate * zoom.x)
+		var to_mouse = get_global_mouse_position() - get_node(target).global_position
+		var dist_forward = smoothstep(0.0, max_lead, to_mouse.length() - lead_dist)
+		var target_pos = (get_node(target).global_position + get_global_mouse_position()) * 0.5
+		target_pos = get_node(target).global_position + to_mouse.normalized() * dist_forward * max_lead
+		global_position = lerp(global_position, target_pos, follow_rate * zoom.x)
 		
 	if (self.trauma):
 		self.trauma = max(self.trauma-ro_decay*delta, 0.0)

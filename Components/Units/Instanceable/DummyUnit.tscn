@@ -3,5 +3,7 @@
 [ext_resource path="res://Components/Units/Instanceable/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Components/Units/Resources/Unit_Test.tres" type="Resource" id=2]
 
+
+
 [node name="Mannequin" instance=ExtResource( 1 )]
 res = ExtResource( 2 )

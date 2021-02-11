@@ -1,5 +1,4 @@
 extends Area2D
-class_name Bullet
 
 export (Resource) var res
 

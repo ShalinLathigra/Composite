@@ -31,8 +31,8 @@ func _process(_delta):
 		
 		# Handle Shooting
 		if (Input.is_action_pressed("player_shoot")):
-			$Gun.shoot(true)
-			body_state = GLOBAL.SHOOT
+			if $Gun.shoot(true):
+				body_state = GLOBAL.SHOOT
 		if (Input.is_action_just_pressed("player_swap")):
 			$Gun.update_res_from_gun()
 			current_res = (current_res + 1) % len(gun_modes)
@@ -46,6 +46,8 @@ func _on_Body_animation_finished():
 	if (body_state == GLOBAL.HURT):
 		body_state = GLOBAL.IDLE
 
-
+func get_slow_amount():
+	return $Gun.slow_amount
+	
 func receive_hit(damage : int, trauma : float):
 	get_node("../Player").receive_hit(damage, trauma)

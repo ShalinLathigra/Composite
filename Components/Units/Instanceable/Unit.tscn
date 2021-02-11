@@ -10,7 +10,7 @@
 [sub_resource type="CircleShape2D" id=2]
 radius = 16.0
 
-[node name="Enemy" type="KinematicBody2D" groups=[
+[node name="Unit" type="KinematicBody2D" groups=[
 "Entity",
 ]]
 z_index = 1

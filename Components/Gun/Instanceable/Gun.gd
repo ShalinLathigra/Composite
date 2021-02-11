@@ -18,6 +18,7 @@ onready var ammo = res.ammo_cap
 onready var mag = res.mag_cap
 
 onready var shots_per_second = res.shots_per_second
+onready var slow_amount = res.slow_amount
 onready var bullets_per_shot = res.bullets_per_shot
 onready var max_reload_time = res.max_reload_time
 onready var reload_time = 0.0
@@ -67,6 +68,8 @@ func shoot(add_trauma):
 		if (add_trauma): 
 			add_trauma()
 		
+	return mag > 0
+		
 func add_trauma():
 	# Camera Shake handled seperately. Called by owner.
 	if (!get_node(GLOBAL.camera).is_gun_trauma_maxed()):
@@ -99,6 +102,7 @@ func update_gun_from_res():
 	mag = res.mag
 	
 	shots_per_second = res.shots_per_second
+	slow_amount = res.slow_amount
 	bullets_per_shot = res.bullets_per_shot
 	max_reload_time = res.max_reload_time
 	$ReloadTimer.start(res.reload_time)
@@ -120,6 +124,7 @@ func update_res_from_gun():
 	res.mag = mag
 
 	res.shots_per_second = shots_per_second
+	res.slow_amount = slow_amount
 	res.bullets_per_shot = bullets_per_shot
 	res.max_reload_time = max_reload_time
 	res.reload_time = $ReloadTimer.get_time_left()
