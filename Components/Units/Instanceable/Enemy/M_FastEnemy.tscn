@@ -3,6 +3,5 @@
 [ext_resource path="res://Components/Units/Instanceable/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Components/Units/Resources/Melee/M_Fast.tres" type="Resource" id=2]
 
-
 [node name="FastMeleeUnit" instance=ExtResource( 1 )]
 res = ExtResource( 2 )

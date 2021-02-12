@@ -7,5 +7,5 @@
 script = ExtResource( 2 )
 frames = ExtResource( 1 )
 move_rate = 600.0
-damage = 1
+damage = 2
 trauma = 0.0

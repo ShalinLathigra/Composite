@@ -8,13 +8,14 @@
 [sub_resource type="CircleShape2D" id=1]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 16.2238
 
 [node name="Unit" type="KinematicBody2D" groups=[
 "Entity",
 ]]
-z_index = 1
+z_index = 4
 collision_layer = 2
+collision_mask = 0
 script = ExtResource( 3 )
 res = ExtResource( 4 )
 friendly = false
@@ -31,10 +32,11 @@ animation = "idle"
 
 [node name="PunchHitBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 3
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchHitBox"]
 shape = SubResource( 2 )
 [connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]
+[connection signal="frame_changed" from="Sprite" to="." method="_on_Sprite_frame_changed"]
 [connection signal="body_entered" from="PunchHitBox" to="." method="_on_PunchHitBox_body_entered"]
 [connection signal="body_exited" from="PunchHitBox" to="." method="_on_PunchHitBox_body_exited"]

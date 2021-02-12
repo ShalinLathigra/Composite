@@ -1,20 +1,11 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Components/Projectiles/SpriteFrames/BigFrames.tres" type="SpriteFrames" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Resource
-class_name Bullet_Resource
-
-export (SpriteFrames) var frames
-export (float, 100, 600) var move_rate
-export (int, 1, 100) var damage
-export (float, 0.05, 1.0) var trauma
-"
+[ext_resource path="res://Components/Projectiles/Resources/Bullet_Resource.gd" type="Script" id=2]
 
 [resource]
-script = SubResource( 1 )
+script = ExtResource( 2 )
 frames = ExtResource( 1 )
 move_rate = 450.0
-damage = 5
+damage = 6
 trauma = 0.5

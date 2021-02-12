@@ -3,6 +3,6 @@
 [ext_resource path="res://Components/Units/Instanceable/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Components/Units/Resources/Melee/M_Base.tres" type="Resource" id=2]
 
-
 [node name="BaseMeleeUnit" instance=ExtResource( 1 )]
+scale = Vector2( 1.25, 1.25 )
 res = ExtResource( 2 )

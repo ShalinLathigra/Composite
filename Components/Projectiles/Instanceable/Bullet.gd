@@ -10,10 +10,11 @@ onready var anims = {
 var dir = Vector2(0,0)
 
 onready var state = GLOBAL.SHOOT
+var mod = Color.white
 
 func _ready():
 	$Sprite.frames = res.frames
-	
+	$Sprite.self_modulate = mod
 	
 func _process(_delta):
 	$Sprite.play(anims[state])

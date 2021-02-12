@@ -1,0 +1,33 @@
+In Progress:
+	UI at all, reload & shit
+
+To Do:
+
+	Knockback!!!
+	
+	Green exploding boxes
+
+	Short Range hit of some kind
+		Gorilla Arms
+			Not instakill, shove real far!
+
+	Swanky Movement
+		Grappling hook / alternate movement systems.
+		
+	Fucking up a lot of shit
+
+	Destructible shit all over the place
+	Make explosions and shit BIGGER
+
+	More Guns
+		BFG
+		Bullet Penetration (after n enemies or whatever?)
+		Flame Thrower/Hurler type gun
+		
+
+
+Done:
+	i-Frames on hit
+	Respawning Enemies
+	Ammo Pickups
+	Shield Pickups
