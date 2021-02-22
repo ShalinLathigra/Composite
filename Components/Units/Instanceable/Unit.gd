@@ -1,8 +1,9 @@
 extends KinematicBody2D
+class_name Unit
 
 onready var anims = {
 	GLOBAL.IDLE : "idle",
-	GLOBAL.CHASE : "walk",
+	GLOBAL.CHASE : "run",
 	GLOBAL.HURT : "oww",
 	GLOBAL.DIE : "die",
 	GLOBAL.HIT : "ponch",
@@ -22,6 +23,8 @@ export (float) var drop_ammo = .025
 export (float) var drop_shield = .0125
 
 onready var mod = Color.white
+
+onready var priority = 0
 
 var chase_timer = 0.0
 
@@ -77,7 +80,9 @@ func push_state(st):
 func pop_state():
 	self.state = self.state_stack.pop_back()
 	
+	
 func _physics_process(delta):
+	
 	match self.state:
 		GLOBAL.IDLE:
 			if (self.target):
@@ -88,12 +93,16 @@ func _physics_process(delta):
 					self.target = null
 			else:
 				self.target = GLOBAL.get_nearest(self.position, friendly)
+			pass
 		GLOBAL.CHASE:
 			chase(delta)
+			pass
 		GLOBAL.SHOOT:
 			shoot()
+			pass
 		GLOBAL.DIE:
 			die()
+			pass
 			
 	self.attack_cd = max(self.attack_cd - delta, 0.0)
 
@@ -107,13 +116,11 @@ func chase(delta):
 		#print("%s > %s = %s" % [to_target.length_squared(), pow(res.attack_start_range * res.override_scale.x, 2.0),to_target.length_squared() > pow(res.attack_start_range * res.override_scale.x, 2.0)])
 		if to_target.length_squared() > pow(res.attack_start_range * res.override_scale.x, 2.0):
 			move_and_slide(to_target.normalized() * res.speed, Vector2.UP)
-			
-		if res.type % 2 == 1:
+		elif res.type % 2 == 1:
 			if target in near_entities:
 				if self.attack_cd == 0.0:
 					push_state(GLOBAL.HIT)
 					self.attack_cd = res.attack_cooldown
-					
 		elif res.type - 2 >= 0:
 			if to_target.length_squared() <= pow(res.attack_start_range, 2.0):
 				push_state(GLOBAL.SHOOT)

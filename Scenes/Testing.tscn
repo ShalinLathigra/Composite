@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Imports/Sprites/Test_tile.png" type="Texture" id=1]
 [ext_resource path="res://Imports/Sprites/Test_tile_no_collider.png" type="Texture" id=2]
@@ -6,9 +6,7 @@
 [ext_resource path="res://Components/Camera/ShakyCamera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Components/Debug/Spawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Components/UI/HelpMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Components/Units/Instanceable/Enemy/M_Enemy.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Components/PickUps/Instanceable/AmmoPickUp.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Components/PickUps/Instanceable/ShieldPickUp.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/LevelController.gd" type="Script" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -56,6 +54,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 1/z_index = 0
 
 [node name="world" type="Node2D"]
+script = ExtResource( 10 )
 
 [node name="TileMap" type="TileMap" parent="." groups=[
 "Map",
@@ -85,86 +84,19 @@ mod = Color( 0.545098, 1, 1, 1 )
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="EnemySpawnIndicator" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( -462.889, 241.403 )
-min_spawn_time = 2000
-max_spawn_time = 4000
+position = Vector2( 376, -196 )
 
 [node name="EnemySpawnIndicator2" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 483.512, 241.403 )
-min_spawn_time = 2000
-max_spawn_time = 4000
+position = Vector2( 374.995, 199.163 )
 
 [node name="EnemySpawnIndicator3" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 480.842, -256.493 )
-min_spawn_time = 2000
-max_spawn_time = 4000
+position = Vector2( -441.927, 211.176 )
 
 [node name="EnemySpawnIndicator4" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( -460.22, -251.153 )
-min_spawn_time = 2000
-max_spawn_time = 4000
-
-[node name="EnemySpawnIndicator5" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( -444.202, -5.54263 )
-min_spawn_time = 2000
-max_spawn_time = 4000
-
-[node name="EnemySpawnIndicator6" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 451.476, 6.47092 )
-min_spawn_time = 2000
-max_spawn_time = 4000
-
-[node name="BaseMeleeUnit" parent="Enemies" instance=ExtResource( 7 )]
-position = Vector2( -260.574, 8.73581 )
-scale = Vector2( 1.5625, 1.5625 )
+position = Vector2( -427.243, -211.968 )
 
 [node name="Allies" type="Node2D" parent="."]
 
 [node name="HelpMenu" parent="." instance=ExtResource( 6 )]
-
-[node name="ShieldPickUp" parent="." instance=ExtResource( 9 )]
-position = Vector2( -132.595, -108.426 )
-
-[node name="ShieldPickUp2" parent="." instance=ExtResource( 9 )]
-position = Vector2( -19.5946, -138.426 )
-
-[node name="ShieldPickUp3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 110.405, -107.426 )
-
-[node name="ShieldPickUp4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 177.405, -22.4263 )
-
-[node name="ShieldPickUp5" parent="." instance=ExtResource( 9 )]
-position = Vector2( 259.405, -141.426 )
-
-[node name="ShieldPickUp6" parent="." instance=ExtResource( 9 )]
-position = Vector2( 296.405, -21.4263 )
-
-[node name="ShieldPickUp7" parent="." instance=ExtResource( 9 )]
-position = Vector2( 276.405, 96.5737 )
-
-[node name="ShieldPickUp8" parent="." instance=ExtResource( 9 )]
-position = Vector2( 178.405, 179.574 )
-
-[node name="ShieldPickUp9" parent="." instance=ExtResource( 9 )]
-position = Vector2( 81.4054, 72.5737 )
-
-[node name="ShieldPickUp10" parent="." instance=ExtResource( 9 )]
-position = Vector2( -13.5946, 152.574 )
-
-[node name="ShieldPickUp11" parent="." instance=ExtResource( 9 )]
-position = Vector2( -65.5946, 32.5737 )
-
-[node name="ShieldPickUp12" parent="." instance=ExtResource( 9 )]
-position = Vector2( -137.595, 134.574 )
-
-[node name="ShieldPickUp13" parent="." instance=ExtResource( 9 )]
-position = Vector2( -161.595, 36.5737 )
-
-[node name="ShieldPickUp14" parent="." instance=ExtResource( 9 )]
-position = Vector2( -265.595, 132.574 )
-
-[node name="AmmoPickUp" parent="." instance=ExtResource( 8 )]
-position = Vector2( -204.089, -57.316 )
 
 [editable path="Player"]

@@ -34,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Projectiles/Instanceable/Rocket.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Unit",
+"language": "GDScript",
+"path": "res://Components/Units/Instanceable/Unit.gd"
+}, {
+"base": "Node2D",
+"class": "UnitGroup",
+"language": "GDScript",
+"path": "res://Components/UnitFormations/UnitGroup.gd"
+}, {
 "base": "Resource",
 "class": "Unit_Resource",
 "language": "GDScript",
@@ -45,6 +55,8 @@ _global_script_class_icons={
 "Gun_Resource": "",
 "PickUp": "",
 "Rocket": "",
+"Unit": "",
+"UnitGroup": "",
 "Unit_Resource": ""
 }
 

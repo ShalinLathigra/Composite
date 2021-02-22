@@ -1,6 +1,4 @@
 extends Node
-
-
 enum {
 	IDLE, 	# Do Nothing, check if state should change
 	WALK, 	# Move at slow speed
@@ -116,3 +114,4 @@ func _unhandled_key_input(event):
 		print("started!")
 		spawners_active = true
 		toggle_spawners(false, spawners_active)
+ 
