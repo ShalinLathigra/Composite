@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Area2D",
-"class": "Bullet",
-"language": "GDScript",
-"path": "res://Components/Projectiles/Instanceable/Bullet.gd"
-}, {
 "base": "Resource",
 "class": "Bullet_Resource",
 "language": "GDScript",
@@ -30,15 +25,38 @@ _global_script_classes=[ {
 "path": "res://Components/Gun/Resources/Gun_Resource.gd"
 }, {
 "base": "Resource",
+"class": "PickUp",
+"language": "GDScript",
+"path": "res://Components/PickUps/Resources/PickUpResource.gd"
+}, {
+"base": "Area2D",
+"class": "Rocket",
+"language": "GDScript",
+"path": "res://Components/Projectiles/Instanceable/Rocket.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Unit",
+"language": "GDScript",
+"path": "res://Components/Units/Instanceable/Unit.gd"
+}, {
+"base": "Node2D",
+"class": "UnitGroup",
+"language": "GDScript",
+"path": "res://Components/UnitFormations/UnitGroup.gd"
+}, {
+"base": "Resource",
 "class": "Unit_Resource",
 "language": "GDScript",
 "path": "res://Components/Units/Resources/Unit_Resource.gd"
 } ]
 _global_script_class_icons={
-"Bullet": "",
 "Bullet_Resource": "",
 "Gun_Base": "",
 "Gun_Resource": "",
+"PickUp": "",
+"Rocket": "",
+"Unit": "",
+"UnitGroup": "",
 "Unit_Resource": ""
 }
 
@@ -99,7 +117,7 @@ player_down={
 }
 player_walk={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
  ]
 }
 player_shoot={
@@ -109,7 +127,27 @@ player_shoot={
 }
 player_dodge={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_swap={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+debug_reset={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+helpmenu_toggle={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":72,"unicode":0,"echo":false,"script":null)
+ ]
+}
+debug_start={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":80,"unicode":0,"echo":false,"script":null)
  ]
 }
 
@@ -122,6 +160,8 @@ player_dodge={
 2d_physics/layer_5="Ally"
 2d_physics/layer_6="Walls"
 2d_physics/layer_7="EnemyHitBoxes"
+2d_physics/layer_8="PlayerBigHitBox"
+2d_physics/layer_9="PickUps"
 
 [rendering]
 

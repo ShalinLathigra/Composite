@@ -16,5 +16,5 @@ death_shake = 0.25
 type = 1
 hurt_frames = [ 1 ]
 bullet_type = 0
-attack_start_range = 0.0
+attack_start_range = 16.0
 attack_end_range = 0.0

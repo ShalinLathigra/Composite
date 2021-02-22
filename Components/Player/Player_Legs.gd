@@ -3,9 +3,14 @@ extends KinematicBody2D
 export (float, 0, 600) var walk_speed = 100
 export (float, 0, 600) var run_speed = 300
 export (float, 0, 1) var friction = 0.05
-export (int) var health = 10
+export (int) var max_health = 10
+onready var health = max_health
+
 export (float) var dodge_cooldown;
 onready var time_of_last_dodge = OS.get_ticks_msec();
+export (int, 0, 5000) var i_time
+onready var time_of_last_hit = 0
+onready var shield_time = 0
 
 onready var vel = Vector2()
 
@@ -29,10 +34,19 @@ onready var lock_anims = [GLOBAL.HURT, GLOBAL.DIE, GLOBAL.DODGE]
 
 var leg_state = GLOBAL.IDLE
 
+signal update_ui ()
+
+func update_ui():
+	emit_signal("update_ui")
+	
+
 func _ready():
 	if (!GLOBAL.player):
 		GLOBAL.player = self
 	GLOBAL.register_unit(self.get_path())
+	
+	connect("update_ui", $PlayerInfoUI, "update_ui")
+	update_ui()
 
 func process_input():
 	if not (leg_state in lock_anims):
@@ -59,12 +73,22 @@ func process_input():
 			elif (Input.is_action_pressed("player_walk")):
 				speed = walk_speed
 				leg_state = GLOBAL.WALK
+				
+			if ($Body.body_state == GLOBAL.SHOOT):
+				speed *= $Body.get_slow_amount()
 			vel = direction.normalized() * speed
 		else:
 			leg_state = GLOBAL.IDLE
 
 func receive_hit(damage : int, trauma : float):
+	if (leg_state == GLOBAL.DODGE or OS.get_ticks_msec() < time_of_last_hit + i_time or OS.get_ticks_msec() < shield_time):
+		return
+	
 	self.health -= damage
+	time_of_last_hit = OS.get_ticks_msec()
+	$HurtPlayer.play("Hurt")
+	
+	update_ui()
 	
 	get_node(GLOBAL.camera).add_trauma(trauma)
 	if (leg_state != GLOBAL.HURT):
@@ -72,6 +96,13 @@ func receive_hit(damage : int, trauma : float):
 	if ($Body.body_state != GLOBAL.HURT):
 		$Body.body_state = GLOBAL.HURT
 
+
+func _process(delta):
+	# Deal with lasting pickup effects here
+	if OS.get_ticks_msec() > shield_time:
+		$Shield.visible = false
+		set_process(false)
+	
 	
 func _physics_process(_delta):
 	process_input()	
@@ -88,9 +119,6 @@ func _on_Legs_animation_finished():
 export (float) var dodge_dist;
 export (float) var dodge_time;
 func dodge(_delta):
-	# we know how far we're moving
-	# we know how long a dodge should last
-	# Do I use a tween, alter the distance to be until I collide?
 	if (OS.get_ticks_msec() > time_of_last_dodge + dodge_time):
 		time_of_last_dodge = OS.get_ticks_msec()
 		leg_state = GLOBAL.IDLE
@@ -102,6 +130,22 @@ func idle(_delta):
 	pass
 # 				Move =======================================================
 func move(_delta):
-	#print("%s called %s" % [leg_state, "move"])
 	move_and_slide(vel, Vector2.UP)
 	vel = lerp(vel, Vector2(0,0), friction)
+
+func reset():
+	health = max_health
+	$Body.reset()
+		
+func apply_pick_up(pickup):
+	match pickup.type:
+		1: 
+			$Body.add_ammo(pickup.delta)
+		2: 
+			shield_time = OS.get_ticks_msec() + pickup.delta
+			$Shield.visible = true
+			set_process(true)
+			# need to display the shield somehow
+			# 	Maybe just have another circle texture to indicate shield? Want it to be cooler though
+		_: 
+			print("%s picked up %s of type: %s with value %s" % [name, pickup.name, "Unknown", pickup.res.delta])

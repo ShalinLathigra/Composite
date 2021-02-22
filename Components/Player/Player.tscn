@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Components/Player/Player_Legs.gd" type="Script" id=1]
 [ext_resource path="res://Components/Player/PlayerFrames.tres" type="SpriteFrames" id=2]
@@ -6,20 +6,81 @@
 [ext_resource path="res://Components/Player/PlayerHurtBox.gd" type="Script" id=4]
 [ext_resource path="res://Components/Player/Player_Body.gd" type="Script" id=5]
 [ext_resource path="res://Components/Cheats/Circle_Shadow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Gun/Resources/Gun_Base.tres" type="Resource" id=7]
+[ext_resource path="res://Components/Gun/Resources/Gun_Fast.tres" type="Resource" id=8]
+[ext_resource path="res://Components/Gun/Resources/Gun_Big.tres" type="Resource" id=9]
+[ext_resource path="res://Imports/Sprites/Player/shield_0.png" type="Texture" id=10]
+[ext_resource path="res://Components/UI/PlayerInfoUI.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
-height = 8.0
+height = 40.0
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 28 )
 
-[node name="Player" type="KinematicBody2D"]
-z_index = 2
+[sub_resource type="Animation" id=3]
+resource_name = "Default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Legs:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Hurt"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Legs:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.4, 0.6, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 0.356863, 0, 0, 0 ), Color( 1, 0.215686, 0.215686, 0.913725 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.4, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 1, 0.215686, 0.215686, 0.913725 ), Color( 0.356863, 0, 0, 0 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Entity",
+]]
+z_index = 5
 collision_mask = 0
 script = ExtResource( 1 )
 friction = 0.25
-dodge_cooldown = 1000.0
+dodge_cooldown = 500.0
 dodge_dist = 600.0
 dodge_time = 250.0
 
@@ -37,23 +98,36 @@ scale = Vector2( 1.25, 1.25 )
 frames = ExtResource( 2 )
 animation = "idle"
 script = ExtResource( 5 )
+gun_modes = [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ]
 
 [node name="Gun" parent="Body" instance=ExtResource( 3 )]
 position = Vector2( 0, 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 28.8728 )
+position = Vector2( 0, 13 )
 shape = SubResource( 1 )
 
 [node name="HurtBox" type="Area2D" parent="." groups=[
 "Entity",
 ]]
-position = Vector2( 0, 40.8728 )
-collision_mask = 0
+position = Vector2( 0, 13 )
+collision_layer = 2147483776
+collision_mask = 256
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0.117981, -28.2704 )
 shape = SubResource( 2 )
+
+[node name="HurtPlayer" type="AnimationPlayer" parent="."]
+anims/Default = SubResource( 3 )
+anims/Hurt = SubResource( 4 )
+
+[node name="Shield" type="Sprite" parent="."]
+visible = false
+modulate = Color( 0, 1, 1, 0.490196 )
+position = Vector2( 0, 12 )
+texture = ExtResource( 10 )
+
+[node name="PlayerInfoUI" parent="." instance=ExtResource( 11 )]
 [connection signal="animation_finished" from="Legs" to="." method="_on_Legs_animation_finished"]
 [connection signal="animation_finished" from="Body" to="Body" method="_on_Body_animation_finished"]

@@ -1,0 +1,61 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Components/Debug/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_SlowEnemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/R_Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Units/Instanceable/Enemy/M_FastEnemy.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.375546, 0.539301, 0.768559, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.403922, 0, 0, 1, 1, 0, 0, 0.470588, 1, 0.636773, 0.0737704, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.576136 ), 0.0, 0.0, 0, 0, Vector2( 0.141463, 0.382955 ), -0.105489, -0.105489, 0, 0, Vector2( 0.331707, 0.501136 ), 0.0, 0.0, 0, 0, Vector2( 0.512195, 0.821591 ), 0.0, 0.0, 0, 0, Vector2( 0.741463, 0.601136 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.194318 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.423077, 0.681319, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 1, 0, 0, 1, 1, 0.773438, 0, 1, 1, 0.621094, 0.621094, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+lifetime_randomness = 0.25
+trail_color_modifier = SubResource( 6 )
+emission_shape = 1
+emission_sphere_radius = 6.0
+flag_disable_z = true
+gravity = Vector3( 0, -9, 0 )
+initial_velocity = 6.0
+initial_velocity_random = 1.0
+angular_velocity = 240.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.5
+orbit_velocity_random = 1.0
+linear_accel = 12.0
+linear_accel_random = 1.0
+radial_accel = -50.0
+radial_accel_random = 1.0
+tangential_accel = -40.0
+tangential_accel_random = 0.35
+damping = 24.0
+damping_random = 1.0
+scale = 6.0
+scale_random = 0.25
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[node name="EnemySpawnIndicator" type="Particles2D"]
+amount = 18
+process_material = SubResource( 7 )
+script = ExtResource( 1 )
+enemy_types = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ]
+min_spawn_time = 1000
+max_spawn_time = 3000

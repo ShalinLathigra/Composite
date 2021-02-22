@@ -6,24 +6,30 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "Shoot",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
 } ]
 
 [resource]
+resource_name = "Gun_Base"
 script = ExtResource( 1 )
 frames = SubResource( 1 )
 shots_per_second = 8.0
+slow_amount = 0.1
+bullets_per_shot = 1
 mag_cap = 16
 ammo_cap = 240
-reload_time = 1.5
+mag = 3
+ammo = 240
+max_reload_time = 0.5
+reload_time = 0.0
 shake = 1.5
 muzzle_dist = 0.5
 trauma = 0.4

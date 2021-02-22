@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Imports/Sprites/Test_tile.png" type="Texture" id=1]
 [ext_resource path="res://Imports/Sprites/Test_tile_no_collider.png" type="Texture" id=2]
 [ext_resource path="res://Components/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Components/Camera/ShakyCamera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Debug/Spawner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Components/UI/HelpMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/LevelController.gd" type="Script" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -51,6 +54,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 1/z_index = 0
 
 [node name="world" type="Node2D"]
+script = ExtResource( 10 )
 
 [node name="TileMap" type="TileMap" parent="." groups=[
 "Map",
@@ -65,13 +69,34 @@ tile_data = PoolIntArray( -1179680, 0, 0, -1179679, 0, 0, -1179678, 0, 0, -11796
 [node name="ShakyCamera" parent="." instance=ExtResource( 4 )]
 zoom = Vector2( 0.75, 0.75 )
 target = NodePath("../Player")
-follow_rate = 0.31
+follow_rate = 0.15
+max_lead = 150.0
+lead_dist = 200.0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 100, 0 )
+position = Vector2( -0.5, -41 )
+dodge_cooldown = 750.0
+i_time = 2000
+
+[node name="Body" parent="Player" index="2"]
+mod = Color( 0.545098, 1, 1, 1 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="EnemySpawnIndicator" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 376, -196 )
+
+[node name="EnemySpawnIndicator2" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 374.995, 199.163 )
+
+[node name="EnemySpawnIndicator3" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -441.927, 211.176 )
+
+[node name="EnemySpawnIndicator4" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -427.243, -211.968 )
+
 [node name="Allies" type="Node2D" parent="."]
+
+[node name="HelpMenu" parent="." instance=ExtResource( 6 )]
 
 [editable path="Player"]

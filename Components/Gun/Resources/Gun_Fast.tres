@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Components/Gun/Resources/Gun_Resource.gd" type="Script" id=1]
+[ext_resource path="res://Components/Gun/SpriteFrames/PistolFrames.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://Components/Projectiles/Resources/Bullet_Light.tres" type="Resource" id=3]
+
+[resource]
+resource_name = "Gun_Fast"
+script = ExtResource( 1 )
+frames = ExtResource( 2 )
+shots_per_second = 8.0
+slow_amount = 0.25
+bullets_per_shot = 4
+mag_cap = 96
+ammo_cap = 300
+mag = 96
+ammo = 300
+max_reload_time = 2.5
+reload_time = 0.0
+shake = 15.0
+muzzle_dist = 0.5
+trauma = 0.4
+hold_distance = 16.0
+bullet_type = 1
+bullet_override_resource = ExtResource( 3 )

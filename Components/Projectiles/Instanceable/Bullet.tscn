@@ -1,21 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Components/Projectiles/Resources/Bullet_Base.tres" type="Resource" id=1]
-[ext_resource path="res://Components/Projectiles/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://Components/Projectiles/Instanceable/Bullet.gd" type="Script" id=3]
+[ext_resource path="res://Components/Projectiles/Instanceable/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://Components/Projectiles/Resources/Bullet_Base.tres" type="Resource" id=2]
+[ext_resource path="res://Components/Projectiles/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 6 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 11.357
 
 [node name="Bullet" type="Area2D"]
+z_index = 4
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource( 3 )
-res = ExtResource( 1 )
+script = ExtResource( 1 )
+res = ExtResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 8, 0 )
-frames = ExtResource( 2 )
+frames = ExtResource( 4 )
 animation = "moving"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

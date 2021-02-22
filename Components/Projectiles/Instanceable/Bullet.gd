@@ -1,5 +1,4 @@
 extends Area2D
-class_name Bullet
 
 export (Resource) var res
 
@@ -11,10 +10,11 @@ onready var anims = {
 var dir = Vector2(0,0)
 
 onready var state = GLOBAL.SHOOT
+var mod = Color.white
 
 func _ready():
 	$Sprite.frames = res.frames
-	
+	$Sprite.self_modulate = mod
 	
 func _process(_delta):
 	$Sprite.play(anims[state])
@@ -32,6 +32,7 @@ func _on_Sprite_animation_finished():
 func _on_Bullet_body_entered(body):
 	state = GLOBAL.HIT
 	if (body.is_in_group("Entity")):
+
 		collision_mask = 0
 		collision_layer = 0
 		body.receive_hit(res.damage, res.trauma)
