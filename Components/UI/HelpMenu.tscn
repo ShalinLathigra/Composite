@@ -8,32 +8,35 @@
 script = ExtResource( 3 )
 
 [node name="Backdrop" type="TextureRect" parent="."]
-modulate = Color( 0, 0, 0, 0.247059 )
-margin_left = 10.0
-margin_top = 210.0
-margin_right = 402.0
-margin_bottom = 436.0
+self_modulate = Color( 0, 0, 0, 0.247059 )
+margin_left = 11.3348
+margin_top = 133.914
+margin_right = 403.335
+margin_bottom = 427.914
 texture = ExtResource( 2 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="RichTextLabel" parent="."]
-margin_left = 35.0
-margin_top = 222.0
-margin_right = 393.0
-margin_bottom = 426.0
+[node name="Text" type="RichTextLabel" parent="Backdrop"]
+margin_left = 25.0
+margin_top = 12.0
+margin_right = 383.0
+margin_bottom = 290.0
 custom_fonts/normal_font = ExtResource( 1 )
-text = "WASD : Run
+text = "
+WASD : Run
 LMB : Shoot
 Space : Switch weapon
 L-Shift : Dodge
 L-Ctrl : Walk
 
-P : Start Onslaught
-Shift+R : Restart
+L-Ctrl+R : Next Level
+9 : LESS camera shake
+0 : MORE camera shake
 
+P : Start Onslaught
 H : Show/Hide Controls"
 __meta__ = {
 "_edit_use_anchors_": false

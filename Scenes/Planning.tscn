@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Planning.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Imports/Fonts/PrStart.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Components/UI/PlanningUI/UnitList.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/UI/PlanningUI/LeaderList2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MiscResources/Font.tres" type="DynamicFont" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+font_data = ExtResource( 3 )
+
+[node name="group_planner" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Lead1" parent="." instance=ExtResource( 5 )]
+dim_x = 1
+max_size = 1
+enabled = true
+
+[node name="Lead2" parent="." instance=ExtResource( 5 )]
+position = Vector2( -166.691, -114.59 )
+dim_x = 1
+max_size = 1
+enabled = true
+
+[node name="Lead3" parent="." instance=ExtResource( 5 )]
+position = Vector2( -2.58069, -114.59 )
+dim_x = 1
+max_size = 1
+enabled = true
+
+[node name="Player" type="Position2D" parent="."]
+position = Vector2( -165.883, -224.158 )
+
+[node name="Sprite4" type="Sprite" parent="Player"]
+modulate = Color( 0, 0, 0, 0.596078 )
+position = Vector2( 0, 0.341 )
+scale = Vector2( 2.26277, 1.64015 )
+texture = ExtResource( 2 )
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Player"]
+margin_left = -53.6742
+margin_top = -39.8348
+margin_right = 60.3258
+margin_bottom = 7.16516
+custom_fonts/normal_font = SubResource( 1 )
+text = "Player
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpareList" parent="." instance=ExtResource( 4 )]
+position = Vector2( 184.976, -109.579 )
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="SpareList"]
+margin_left = 32.5914
+margin_top = -66.0609
+margin_right = 197.591
+margin_bottom = -19.0609
+custom_fonts/normal_font = SubResource( 1 )
+text = "Unit List"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="ToolButton" parent="."]
+margin_left = 185.79
+margin_top = 224.746
+margin_right = 461.79
+margin_bottom = 256.746
+custom_fonts/font = ExtResource( 6 )
+text = "Start Level"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]

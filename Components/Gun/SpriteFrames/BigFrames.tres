@@ -4,21 +4,21 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 16 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 16 )
+region = Rect2( 0, 0, 32, 32 )
 
 [resource]
 animations = [ {
 "frames": [ SubResource( 1 ) ],
 "loop": true,
-"name": "Idle",
+"name": "Shoot",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 2 ) ],
 "loop": true,
-"name": "Shoot",
+"name": "Idle",
 "speed": 5.0
 } ]

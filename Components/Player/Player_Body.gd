@@ -25,8 +25,7 @@ func _ready():
 	connect("needs_update", get_node(".."), "update_ui")
 
 func _process(_delta):
-	
-	if (self.body_state != GLOBAL.HURT):
+	if (self.body_state != GLOBAL.HURT and get_node(GLOBAL.player).active and GLOBAL.level_active):
 		var to_mouse = (get_global_mouse_position() - global_position).normalized()
 		
 		# Handle Player Body Direction
@@ -60,6 +59,8 @@ func get_slow_amount():
 	
 func receive_hit(damage : int, trauma : float):
 	get_node("../Player").receive_hit(damage, trauma)
+	AudioManager.play_sound(AudioManager.BONE_CRUNCH, .01)
+	AudioManager.play_sound(AudioManager.PUNCH_IMPACT, .01)
 
 func next_gun():
 	$Gun.update_res_from_gun()
@@ -68,7 +69,7 @@ func next_gun():
 	$Gun.update_gun_from_res()
 	
 func reset():
-	for i in range(gun_modes.size()):
+	for _i in range(gun_modes.size()):
 		$Gun.reset()
 		next_gun()
 		

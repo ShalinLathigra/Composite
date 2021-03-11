@@ -73,7 +73,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 1, 0.215686, 0.215686, 0.913725 ), Color( 0.356863, 0, 0, 0 ), Color( 0.356863, 0, 0, 0.784314 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="player" type="KinematicBody2D" groups=[
 "Entity",
 ]]
 z_index = 5

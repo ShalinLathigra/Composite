@@ -6,7 +6,7 @@
 [ext_resource path="res://Components/Projectiles/SpriteFrames/BigFrames.tres" type="SpriteFrames" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 64.0
+radius = 256.0
 
 [node name="Rocket" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
