@@ -25,6 +25,7 @@ onready var anims = {
 	GLOBAL.RUN : "run",
 	GLOBAL.HURT : "hurt",
 	GLOBAL.DODGE : "dodge",
+	GLOBAL.SHOOT : "shoot",
 }
 
 onready var actions = {
@@ -33,6 +34,7 @@ onready var actions = {
 	GLOBAL.RUN : funcref( self, "move"),
 	GLOBAL.HURT : funcref( self, "idle"),
 	GLOBAL.DODGE : funcref( self, "dodge"),
+	GLOBAL.SHOOT : funcref( self, "move"),
 }
 
 onready var lock_anims = [GLOBAL.HURT, GLOBAL.DIE, GLOBAL.DODGE]
@@ -80,10 +82,10 @@ func process_input():
 					leg_state = GLOBAL.DODGE
 					vel = direction.normalized()
 					time_of_last_dodge = OS.get_ticks_msec()
-			if ($Body.body_state == GLOBAL.SHOOT):
+			if (leg_state == GLOBAL.SHOOT):
 				speed *= $Body.get_slow_amount()
 			vel = direction.normalized() * speed
-		else:
+		elif not leg_state == GLOBAL.SHOOT:
 			leg_state = GLOBAL.IDLE
 
 func receive_hit(damage : int, trauma : float):
@@ -93,14 +95,14 @@ func receive_hit(damage : int, trauma : float):
 	self.health -= damage
 	time_of_last_hit = OS.get_ticks_msec()
 	$HurtPlayer.play("Hurt")
+	AudioManager.play_sound(AudioManager.BONE_CRUNCH, .01)
+	AudioManager.play_sound(AudioManager.PUNCH_IMPACT, .01)
 	
 	update_ui()
 	
 	get_node(GLOBAL.camera).add_trauma(trauma)
 	if (leg_state != GLOBAL.HURT):
 		leg_state = GLOBAL.HURT
-	if ($Body.body_state != GLOBAL.HURT):
-		$Body.body_state = GLOBAL.HURT
 
 
 func _process(_delta):
@@ -114,11 +116,18 @@ func _physics_process(_delta):
 	if (active):
 		process_input()	
 		actions[leg_state].call_func(_delta)
+		if (leg_state == GLOBAL.SHOOT):
+			$Legs.speed_scale = $Body.get_fire_rate()
+			$Legs.flip_h = $Body.get_flip_h()
+		else:
+			$Legs.speed_scale = 1.0
 		$Legs.play(anims[leg_state])
 	
 
 func _on_Legs_animation_finished():
 	if (leg_state == GLOBAL.HURT):
+		leg_state = GLOBAL.IDLE
+	if (leg_state == GLOBAL.SHOOT):
 		leg_state = GLOBAL.IDLE
 
 # Actions =======================================================

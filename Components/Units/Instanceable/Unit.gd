@@ -86,6 +86,7 @@ func set_collision_masks():
 		$PunchHitBox.collision_mask = 2
 		#$Sprite.frames = GLOBAL.ally_frames
 		mod = Color.cadetblue
+		$Sprite.material.set_shader_param("outLineColor", Color.cadetblue)
 	else:
 		collision_layer = 2
 		collision_mask = 16
@@ -93,6 +94,7 @@ func set_collision_masks():
 		$PunchHitBox.collision_mask = 1 + 16
 		#$Sprite.frames = GLOBAL.enemy_frames
 		mod = Color.tomato
+		$Sprite.material.set_shader_param("outLineColor", Color.tomato)
 	if res.type - 2 >= 0:
 		if (friendly):
 			gun.bullet_layer = 8

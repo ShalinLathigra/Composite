@@ -93,7 +93,7 @@ _global_script_class_icons={
 [application]
 
 config/name="(4501)Auto-TDS"
-run/main_scene="res://Scenes/world.tscn"
+run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://Imports/Composite.png"
 
 [autoload]

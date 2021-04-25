@@ -34,6 +34,7 @@ func set_active(a):
 		for lead in leads:
 			lead.update_list()
 		$SpareList.update_list()
+		get_node(GLOBAL.player).global_position = $Player.global_position
 	
 func populate_lists_from_PlayerData():
 	var spares = PlayerData.spare_units
