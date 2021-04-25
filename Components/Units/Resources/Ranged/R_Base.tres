@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource( 1 )
 health = 2
-speed = 25.0
-override_scale = Vector2( 1, 1 )
-chase_rad = 300.0
+speed = 100.0
+override_scale = Vector2( 3, 3 )
+chase_rad = 600.0
 max_chase_timer = 10.0
 attack_cooldown = 0.0
 attack_damage = 0
@@ -20,5 +20,7 @@ hurt_frames = [ 1 ]
 gun_prefab = ExtResource( 2 )
 gun_override_resource = ExtResource( 3 )
 bullet_type = 1
-attack_start_range = 250.0
-attack_end_range = 350.0
+attack_start_range = 512.0
+attack_end_range = 960.0
+volume = -25.0
+clip = 0

@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Components/Debug/Spawner.gd" type="Script" id=1]
-[ext_resource path="res://Components/Units/Instanceable/Enemy/M_Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Components/Units/Instanceable/Enemy/M_SlowEnemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Components/Units/Instanceable/Enemy/R_Enemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Components/Units/Instanceable/Enemy/M_FastEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Components/Units/Instanceable/Typed/M_.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Components/Units/Instanceable/Typed/M_Slow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Units/Instanceable/Typed/R_.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Units/Instanceable/Typed/M_Fast.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.375546, 0.539301, 0.768559, 1 )

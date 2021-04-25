@@ -1,9 +1,10 @@
 extends KinematicBody2D
+class_name Player
 
 export (float, 0, 600) var walk_speed = 100
 export (float, 0, 600) var run_speed = 300
 export (float, 0, 1) var friction = 0.05
-export (int) var max_health = 10
+export (int) var max_health = 100
 onready var health = max_health
 
 export (float) var dodge_cooldown;
@@ -14,12 +15,17 @@ onready var shield_time = 0
 
 onready var vel = Vector2()
 
+var leader_paths : Array = []
+
+var active : bool
+
 onready var anims = {
 	GLOBAL.IDLE : "idle",
 	GLOBAL.WALK : "walk",
 	GLOBAL.RUN : "run",
 	GLOBAL.HURT : "hurt",
 	GLOBAL.DODGE : "dodge",
+	GLOBAL.SHOOT : "shoot",
 }
 
 onready var actions = {
@@ -28,6 +34,7 @@ onready var actions = {
 	GLOBAL.RUN : funcref( self, "move"),
 	GLOBAL.HURT : funcref( self, "idle"),
 	GLOBAL.DODGE : funcref( self, "dodge"),
+	GLOBAL.SHOOT : funcref( self, "move"),
 }
 
 onready var lock_anims = [GLOBAL.HURT, GLOBAL.DIE, GLOBAL.DODGE]
@@ -43,10 +50,16 @@ func update_ui():
 func _ready():
 	if (!GLOBAL.player):
 		GLOBAL.player = self
-	GLOBAL.register_unit(self.get_path())
+	get_node(GLOBAL.level).register_unit(self.get_path())
 	
 	connect("update_ui", $PlayerInfoUI, "update_ui")
 	update_ui()
+	
+	PlayerData.set_leads_spawn_positions()
+	
+func set_active(a):
+	active = a
+	$PlayerInfoUI/Backdrop.visible = a
 
 func process_input():
 	if not (leg_state in lock_anims):
@@ -69,15 +82,10 @@ func process_input():
 					leg_state = GLOBAL.DODGE
 					vel = direction.normalized()
 					time_of_last_dodge = OS.get_ticks_msec()
-				
-			elif (Input.is_action_pressed("player_walk")):
-				speed = walk_speed
-				leg_state = GLOBAL.WALK
-				
-			if ($Body.body_state == GLOBAL.SHOOT):
+			if (leg_state == GLOBAL.SHOOT):
 				speed *= $Body.get_slow_amount()
 			vel = direction.normalized() * speed
-		else:
+		elif not leg_state == GLOBAL.SHOOT:
 			leg_state = GLOBAL.IDLE
 
 func receive_hit(damage : int, trauma : float):
@@ -87,17 +95,17 @@ func receive_hit(damage : int, trauma : float):
 	self.health -= damage
 	time_of_last_hit = OS.get_ticks_msec()
 	$HurtPlayer.play("Hurt")
+	AudioManager.play_sound(AudioManager.BONE_CRUNCH, .01)
+	AudioManager.play_sound(AudioManager.PUNCH_IMPACT, .01)
 	
 	update_ui()
 	
 	get_node(GLOBAL.camera).add_trauma(trauma)
 	if (leg_state != GLOBAL.HURT):
 		leg_state = GLOBAL.HURT
-	if ($Body.body_state != GLOBAL.HURT):
-		$Body.body_state = GLOBAL.HURT
 
 
-func _process(delta):
+func _process(_delta):
 	# Deal with lasting pickup effects here
 	if OS.get_ticks_msec() > shield_time:
 		$Shield.visible = false
@@ -105,13 +113,21 @@ func _process(delta):
 	
 	
 func _physics_process(_delta):
-	process_input()	
-	actions[leg_state].call_func(_delta)
-	$Legs.play(anims[leg_state])
+	if (active):
+		process_input()	
+		actions[leg_state].call_func(_delta)
+		if (leg_state == GLOBAL.SHOOT):
+			$Legs.speed_scale = $Body.get_fire_rate()
+			$Legs.flip_h = $Body.get_flip_h()
+		else:
+			$Legs.speed_scale = 1.0
+		$Legs.play(anims[leg_state])
 	
 
 func _on_Legs_animation_finished():
 	if (leg_state == GLOBAL.HURT):
+		leg_state = GLOBAL.IDLE
+	if (leg_state == GLOBAL.SHOOT):
 		leg_state = GLOBAL.IDLE
 
 # Actions =======================================================
@@ -123,14 +139,14 @@ func dodge(_delta):
 		time_of_last_dodge = OS.get_ticks_msec()
 		leg_state = GLOBAL.IDLE
 	else:
-		move_and_slide(vel * (dodge_dist / dodge_time), Vector2.UP)
+		move_and_slide(vel * (dodge_dist / dodge_time) * GLOBAL.time_factor, Vector2.UP)
 
 # 				Idle =======================================================
 func idle(_delta):
 	pass
 # 				Move =======================================================
 func move(_delta):
-	move_and_slide(vel, Vector2.UP)
+	move_and_slide(vel * GLOBAL.time_factor, Vector2.UP)
 	vel = lerp(vel, Vector2(0,0), friction)
 
 func reset():
@@ -145,7 +161,3 @@ func apply_pick_up(pickup):
 			shield_time = OS.get_ticks_msec() + pickup.delta
 			$Shield.visible = true
 			set_process(true)
-			# need to display the shield somehow
-			# 	Maybe just have another circle texture to indicate shield? Want it to be cooler though
-		_: 
-			print("%s picked up %s of type: %s with value %s" % [name, pickup.name, "Unknown", pickup.res.delta])

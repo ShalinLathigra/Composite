@@ -27,91 +27,37 @@ const bullets = {
 const ally_frames = preload("res://Components/Units/Spriteframes/AllyFrames.tres")
 const enemy_frames = preload("res://Components/Units/Spriteframes/EnemyFrames.tres")
 
+const planning_scene = preload("res://Scenes/Planning.tscn")
+const level_scene = preload("res://Scenes/Level.tscn")
+
 const pickups = {
 	PICKUPS.AMMO : preload("res://Components/PickUps/Instanceable/AmmoPickUp.tscn"),
 	PICKUPS.SHIELD : preload("res://Components/PickUps/Instanceable/ShieldPickUp.tscn"),
 }
 
-var player = "/root/world/Player"
+enum UNIT_TYPES {
+	M_,
+	M_FAST,
+	M_SLOW,
+	R_,
+}
+const unit_scenes = {
+	UNIT_TYPES.M_ : preload("res://Components/Units/Instanceable/Typed/M_.tscn"),
+	UNIT_TYPES.M_FAST : preload("res://Components/Units/Instanceable/Typed/M_Fast.tscn"),
+	UNIT_TYPES.M_SLOW : preload("res://Components/Units/Instanceable/Typed/M_Slow.tscn"),
+	UNIT_TYPES.R_ : preload("res://Components/Units/Instanceable/Typed/R_.tscn"),
+}
+
+var world = "/root/world"
+var level = "/root/world/level"
+var planner = "/root/world/group_planner"
+var player = "/root/world/player"
 var camera = "/root/world/ShakyCamera"
+var enemyCollector = "/root/world/EnemyCollector"
+
+var time_factor : float = 1.0
+var level_active : bool = true
 
 func add_trauma(trauma):
 	if (camera):
 		camera.add_trauma(trauma)
-		
-onready var players = []
-onready var enemies = []
-
-onready var num_enemies : int = 0
-onready var max_enemies : int = 30
-onready var min_enemies : int = 15
-onready var spawners_active : bool = false
-
-func register_unit(unit : NodePath, friendly : bool = true) -> void:
-	if (friendly):
-		players.push_back(unit)
-	else:
-		enemies.push_back(unit)
-		if (spawners_active):
-			num_enemies += 1
-			if (num_enemies >= max_enemies):
-				toggle_spawners(friendly, false)
-			
-func unregister_unit(unit : NodePath, friendly : bool = true) -> void:
-	if (friendly and players.find(unit) >= 0):
-		players.remove(players.find(unit))
-	elif !friendly and enemies.find(unit) >= 0:
-		if (spawners_active):
-			num_enemies -= 1
-			if (num_enemies < min_enemies):
-				toggle_spawners(friendly, true)	
-		enemies.remove(enemies.find(unit))
-
-func get_nearest(pos : Vector2, friendly : bool = true):	
-	var targets = null
-	if (friendly):
-		targets = enemies
-	else:
-		targets = players
-		
-	var nearest = null
-	if (len(targets) > 0):
-		nearest = player
-		var nearest_dist = -1
-		for target in targets:
-			if (get_node(target)):
-				var curr = (get_node(target).global_position - pos).length_squared()
-				if curr < nearest_dist or nearest_dist == -1:
-					nearest = target
-					nearest_dist = curr
-			
-	return nearest
-	
-	# Spawner Logic
-	
-onready var ally_spawners = []
-onready var enemy_spawners = []	
-func register_spawner(spawner : NodePath, friendly : bool = false) -> void:
-	if (friendly):
-		ally_spawners.push_back(spawner)
-	else:
-		enemy_spawners.push_back(spawner)# I just think it's a good idea to have access to this lol
-		
-func toggle_spawners(friendly : bool = false, active : bool = false):
-	var spawners = enemy_spawners
-	if (friendly):
-		spawners = ally_spawners
-		
-	for spawner in spawners:
-		get_node(spawner).set_active(active)
-
-func _unhandled_key_input(event):
-	if (Input.is_action_just_pressed("debug_reset")):
-		get_tree().change_scene("res://Scenes/Testing.tscn")
-		get_tree().get_root().get_node(player).reset()
-		spawners_active = false
-	if (Input.is_action_just_pressed("debug_start")):
-		print("started!")
-		spawners_active = true
-		toggle_spawners(false, spawners_active)
- 

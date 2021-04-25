@@ -1,5 +1,4 @@
-extends "res://Components/Projectiles/Instanceable/Bullet.gd"
-
+extends Bullet
 class_name Rocket
 
 onready var near_objects = []
@@ -16,8 +15,11 @@ func _on_RocketArea_body_entered(body):
 	near_objects.push_back(body)
 
 func hit():
-	$Sprite.scale = Vector2(2.0, 2.0)
+	$Sprite.scale = Vector2(4.0, 4.0)
 	state = GLOBAL.HIT
+	
+	AudioManager.play_sound(res.clip, res.volume)
+	
 	for target in near_objects:
 		if (target.is_in_group("Entity")):
 			collision_mask = 0

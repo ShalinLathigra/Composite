@@ -18,3 +18,5 @@ hurt_frames = [ 1 ]
 bullet_type = 0
 attack_start_range = 16.0
 attack_end_range = 0.0
+volume = 0.0
+clip = 0

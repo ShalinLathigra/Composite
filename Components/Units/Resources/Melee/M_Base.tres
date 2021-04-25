@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-health = 2
+health = 4
 speed = 200.0
-override_scale = Vector2( 1, 1 )
+override_scale = Vector2( 1.25, 1.25 )
 chase_rad = 300.0
 max_chase_timer = 7.5
 attack_cooldown = 1.0
@@ -14,7 +14,9 @@ attack_damage = 2
 hit_trauma = 0.05
 death_shake = 0.25
 type = 1
-hurt_frames = [ 1 ]
+hurt_frames = [ 4, 13 ]
 bullet_type = 0
-attack_start_range = 16.0
+attack_start_range = 35.0
 attack_end_range = 0.0
+volume = -20.0
+clip = 1

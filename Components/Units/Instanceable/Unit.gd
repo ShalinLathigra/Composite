@@ -2,12 +2,12 @@ extends KinematicBody2D
 class_name Unit
 
 onready var anims = {
-	GLOBAL.IDLE : "idle",
-	GLOBAL.CHASE : "run",
-	GLOBAL.HURT : "oww",
 	GLOBAL.DIE : "die",
+	GLOBAL.IDLE : "idle",
+	GLOBAL.HURT : "oww",
 	GLOBAL.HIT : "ponch",
-	GLOBAL.SHOOT : "shoot"
+	GLOBAL.CHASE : "run",
+	GLOBAL.SHOOT : "shoot",
 	}
 
 onready var state = GLOBAL.IDLE
@@ -26,6 +26,8 @@ onready var mod = Color.white
 
 onready var priority = 0
 
+onready var active : bool = true
+
 var chase_timer = 0.0
 
 var gun = null
@@ -33,26 +35,27 @@ var gun = null
 var target = null
 var path = []
 
+var followers = []
+
+func get_followers() -> Array:
+	return followers
+	
+func set_followers(a : Array) -> void:
+	followers = a
+	
+func clear_followers() -> Array:
+	var a : Array = followers
+	followers = []
+	return a
+	
+func set_active(a : bool):
+	active = a
+
 func _ready():
 	$CollisionShape2D.scale = res.override_scale
 	$Sprite.scale = res.override_scale
-	GLOBAL.register_unit(self.get_path(), friendly)
-	
-	if (friendly):
-		collision_layer = 1
-		collision_mask = 2
-		$PunchHitBox.collision_layer = 16
-		$PunchHitBox.collision_mask = 2
-		$Sprite.frames = GLOBAL.ally_frames
-		mod = Color.cadetblue
-	else:
-		collision_layer = 2
-		collision_mask = 16
-		$PunchHitBox.collision_layer = 64
-		$PunchHitBox.collision_mask = 1 + 16
-		$Sprite.frames = GLOBAL.enemy_frames
-		mod = Color.tomato
-	
+	get_node(GLOBAL.level).register_unit(self.get_path(), friendly)
+			
 	if res.type - 2 >= 0:
 		# If ranged, instantiate res.gun_prefab
 		# Apply res.gun_override_resource
@@ -70,9 +73,36 @@ func _ready():
 			gun.bullet_mask = 128
 		gun.mod = mod
 		call_deferred("add_child", gun)
+		gun.self_modulate = Color("00ffffff")
+		
+	set_collision_masks()
 		
 		
-
+func set_collision_masks():
+	if (friendly):
+		collision_layer = 16
+		collision_mask = 2
+		$PunchHitBox.collision_layer = 16
+		$PunchHitBox.collision_mask = 2
+		#$Sprite.frames = GLOBAL.ally_frames
+		mod = Color.cadetblue
+		$Sprite.material.set_shader_param("outLineColor", Color.cadetblue)
+	else:
+		collision_layer = 2
+		collision_mask = 16
+		$PunchHitBox.collision_layer = 64
+		$PunchHitBox.collision_mask = 1 + 16
+		#$Sprite.frames = GLOBAL.enemy_frames
+		mod = Color.tomato
+		$Sprite.material.set_shader_param("outLineColor", Color.tomato)
+	if res.type - 2 >= 0:
+		if (friendly):
+			gun.bullet_layer = 8
+			gun.bullet_mask = 2
+		else:
+			gun.bullet_layer = 4
+			gun.bullet_mask = 128
+			
 func push_state(st):
 	self.state_stack.push_back(self.state)
 	self.state = st
@@ -80,31 +110,32 @@ func push_state(st):
 func pop_state():
 	self.state = self.state_stack.pop_back()
 	
+
 	
 func _physics_process(delta):
-	
-	match self.state:
-		GLOBAL.IDLE:
-			if (self.target):
-				if (get_node(self.target)):
-					chase_timer = res.max_chase_timer
-					push_state(GLOBAL.CHASE)
+	if (active):
+		match self.state:
+			GLOBAL.IDLE:
+				if (self.target):
+					if (get_node(self.target)):
+						chase_timer = res.max_chase_timer
+						push_state(GLOBAL.CHASE)
+					else:
+						self.target = null
 				else:
-					self.target = null
-			else:
-				self.target = GLOBAL.get_nearest(self.position, friendly)
-			pass
-		GLOBAL.CHASE:
-			chase(delta)
-			pass
-		GLOBAL.SHOOT:
-			shoot()
-			pass
-		GLOBAL.DIE:
-			die()
-			pass
-			
-	self.attack_cd = max(self.attack_cd - delta, 0.0)
+					self.target = get_node(GLOBAL.level).get_nearest(self.position, friendly)
+					
+			GLOBAL.CHASE:
+				chase(delta)
+				
+			GLOBAL.SHOOT:
+				if (GLOBAL.level_active):
+					shoot()
+				
+			GLOBAL.DIE:
+				die()
+				
+		self.attack_cd = max(self.attack_cd - delta, 0.0)
 
 func chase(delta):
 	if get_node(self.target):
@@ -113,13 +144,20 @@ func chase(delta):
 			chase_timer = max(chase_timer - delta, 0.0)
 			if chase_timer == 0.0:
 				pop_state()
-		#print("%s > %s = %s" % [to_target.length_squared(), pow(res.attack_start_range * res.override_scale.x, 2.0),to_target.length_squared() > pow(res.attack_start_range * res.override_scale.x, 2.0)])
-		if to_target.length_squared() > pow(res.attack_start_range * res.override_scale.x, 2.0):
-			move_and_slide(to_target.normalized() * res.speed, Vector2.UP)
-		elif res.type % 2 == 1:
+		if to_target.length_squared() > pow(res.attack_start_range * 2.0 * res.override_scale.x, 2.0):
+			move_and_slide(to_target.normalized() * res.speed * GLOBAL.time_factor, Vector2.UP)
+			if res.type % 2 == 1:
+				if $Sprite.flip_h != (to_target.x < 0):
+					$Sprite.flip_h = (to_target.x) < 0.0
+					if ($Sprite.flip_h): 
+						$PunchHitBox.position.x = -res.attack_start_range
+					else:
+						$PunchHitBox.position.x = res.attack_start_range
+		if res.type % 2 == 1:
 			if target in near_entities:
-				if self.attack_cd == 0.0:
+				if self.attack_cd == 0.0 and GLOBAL.level_active:
 					push_state(GLOBAL.HIT)
+					AudioManager.play_sound(res.clip, res.volume)
 					self.attack_cd = res.attack_cooldown
 		elif res.type - 2 >= 0:
 			if to_target.length_squared() <= pow(res.attack_start_range, 2.0):
@@ -162,7 +200,7 @@ func die():
 	if (rand_range(0.0, 1.0) < drop_shield):
 		drop_pickup(GLOBAL.PICKUPS.SHIELD)
 		
-	GLOBAL.unregister_unit(self.get_path(), friendly)
+	get_node(GLOBAL.level).unregister_unit(self.get_path(), friendly)
 	set_physics_process(false)
 
 func drop_pickup(type):
@@ -183,6 +221,13 @@ func _process(_delta):
 		
 func despawn():
 	call_deferred("queue_free")
+	
+func set_selected(s):
+	$Sprite.material.set_shader_param("selected", s)
+	if (followers.size() > 0):
+		for f in followers:
+			f.set_selected(s * 0.25)
+	pass
 
 # Signal Handlers ########################################################################
 func _on_Sprite_animation_finished():
@@ -192,6 +237,7 @@ func _on_Sprite_animation_finished():
 func _on_Sprite_frame_changed():
 	if (self.state == GLOBAL.HIT):
 		if ($Sprite.frame in res.hurt_frames):
+			AudioManager.play_sound(AudioManager.PUNCH_IMPACT, -20)
 			for entity in near_entities:
 				get_node(entity).receive_hit(res.attack_damage, res.hit_trauma)
 

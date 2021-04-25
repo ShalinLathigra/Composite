@@ -49,7 +49,7 @@ func shoot(add_trauma):
 		# Gun Housekeeping
 		state = GLOBAL.SHOOT
 		cd = 1.0 / shots_per_second
-		for i in range(bullets_per_shot):
+		for _i in range(bullets_per_shot):
 			mag -= 1
 			if (mag == 0):
 				$ReloadTimer.start(max_reload_time)
@@ -65,6 +65,8 @@ func shoot(add_trauma):
 			bullet_instance.collision_mask = bullet_mask
 			bullet_instance.collision_layer = bullet_layer
 			bullet_instance.mod = mod
+			
+			AudioManager.play_sound(res.clip, res.volume)
 			
 			if (bullet_override_resource):
 				bullet_instance.res = bullet_override_resource

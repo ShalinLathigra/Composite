@@ -13,7 +13,7 @@ onready var active = false
 
 func _ready():
 	max_spawn_time = max(min_spawn_time, max_spawn_time)
-	GLOBAL.register_spawner(get_path(), friendly)
+	get_node(GLOBAL.level).register_spawner(get_path(), friendly)
 
 func _process(_delta):
 	if (OS.get_ticks_msec() > last_spawn + to_next_spawn and active):
@@ -23,10 +23,9 @@ func _process(_delta):
 		to_next_spawn = rand_range(0.0, 1.0) * (max_spawn_time - min_spawn_time) + min_spawn_time
 
 func spawn_unit():
-	var new_enemy = enemy_types[randi() % enemy_types.size()].instance()
-	new_enemy.global_position = Vector2(0.0,0.0)
-	
-	add_child(new_enemy)
+	var new_enemy : Unit = enemy_types[randi() % enemy_types.size()].instance()
+	new_enemy.global_position = global_position
+	get_node(GLOBAL.level).add_unit(new_enemy, friendly, true)
 	
 func set_active(act : bool = false):
 	active = act

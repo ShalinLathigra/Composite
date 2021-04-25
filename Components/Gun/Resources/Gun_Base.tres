@@ -1,37 +1,25 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Components/Gun/Resources/Gun_Resource.gd" type="Script" id=1]
-[ext_resource path="res://Imports/Sprites/Guns/base_1.png" type="Texture" id=2]
-[ext_resource path="res://Imports/Sprites/Guns/base_0.png" type="Texture" id=3]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "Shoot",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-} ]
+[ext_resource path="res://Components/Gun/SpriteFrames/BaseFrames.tres" type="SpriteFrames" id=2]
 
 [resource]
 resource_name = "Gun_Base"
 script = ExtResource( 1 )
-frames = SubResource( 1 )
-shots_per_second = 8.0
-slow_amount = 0.1
+frames = ExtResource( 2 )
+shots_per_second = 3.0
+slow_amount = 0.25
 bullets_per_shot = 1
 mag_cap = 16
 ammo_cap = 240
 mag = 3
 ammo = 240
-max_reload_time = 0.5
+max_reload_time = 1.0
 reload_time = 0.0
 shake = 1.5
 muzzle_dist = 0.5
 trauma = 0.4
-hold_distance = 16.0
+hold_distance = 24.0
+volume = -15.0
+clip = 4
 bullet_type = 1

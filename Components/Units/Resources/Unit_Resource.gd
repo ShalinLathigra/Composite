@@ -21,6 +21,9 @@ export (Resource) var gun_prefab
 export (Resource) var gun_override_resource
 export (int, FLAGS, "BASE", "NONE") var bullet_type
 
-export (float, 10, 300) var attack_start_range
-export (float, 100, 600) var attack_end_range
+export (float, -32, 600) var attack_start_range
+export (float, 100, 1200) var attack_end_range
 
+
+export (float, -50.0, 50.0) var volume
+export (int) var clip

@@ -9,3 +9,5 @@ frames = ExtResource( 1 )
 move_rate = 450.0
 damage = 6
 trauma = 0.5
+volume = -20.0
+clip = 7

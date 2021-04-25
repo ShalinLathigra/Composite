@@ -1,6 +1,4 @@
-extends AnimatedSprite
-
-onready var body_state = GLOBAL.IDLE 
+extends Node2D
 
 export (Array) var gun_modes
 onready var current_res = 0
@@ -25,13 +23,8 @@ func _ready():
 	connect("needs_update", get_node(".."), "update_ui")
 
 func _process(_delta):
-	
-	if (self.body_state != GLOBAL.HURT):
+	if (get_node(GLOBAL.player).leg_state != GLOBAL.HURT and get_node(GLOBAL.player).active and GLOBAL.level_active):
 		var to_mouse = (get_global_mouse_position() - global_position).normalized()
-		
-		# Handle Player Body Direction
-		body_state = GLOBAL.IDLE
-		flip_h = (to_mouse.x) < 0.0
 		
 		# Handle Rotation of Gun
 		$Gun.rotation_degrees = rad2deg(to_mouse.angle())
@@ -39,7 +32,7 @@ func _process(_delta):
 		# Handle Shooting
 		if (Input.is_action_pressed("player_shoot")):
 			if $Gun.shoot(true):
-				body_state = GLOBAL.SHOOT
+				get_node(GLOBAL.player).leg_state = GLOBAL.SHOOT
 				
 			emit_signal("needs_update")
 			
@@ -48,12 +41,12 @@ func _process(_delta):
 			$Gun.check_ammo()
 			emit_signal("needs_update")
 
-	# Play Current Body Animation
-	play(anims[body_state])
-	
-func _on_Body_animation_finished():
-	if (body_state == GLOBAL.HURT):
-		body_state = GLOBAL.IDLE
+func get_fire_rate() -> float:
+	return $Gun.shots_per_second
+
+func get_flip_h() -> bool:
+	var to_mouse = (get_global_mouse_position() - global_position).normalized()
+	return to_mouse.x < 0
 
 func get_slow_amount():
 	return 1.0 - $Gun.slow_amount
@@ -68,7 +61,7 @@ func next_gun():
 	$Gun.update_gun_from_res()
 	
 func reset():
-	for i in range(gun_modes.size()):
+	for _i in range(gun_modes.size()):
 		$Gun.reset()
 		next_gun()
 		

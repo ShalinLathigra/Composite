@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Imports/Fonts/PrStart.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Components/UI/PlanningUI/UnitList.gd" type="Script" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Components/UI/PlanningUI/LeaderList2.gd" type="Script" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 base : hint_color;
+uniform vec4 highlight : hint_color;
+
+uniform float active = 0.0;
+
+void fragment()
+{
+	COLOR = base * (1.0 - active) + highlight * (active);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/base = Color( 0, 0, 0, 1 )
+shader_param/highlight = Color( 1, 1, 1, 1 )
+shader_param/active = 0.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+font_data = ExtResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/base = Color( 0, 0, 0, 1 )
+shader_param/highlight = Color( 1, 1, 1, 1 )
+shader_param/active = 0.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 74, 163 )
+
+[node name="Lead1" type="Position2D"]
+position = Vector2( -330.802, -114.59 )
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.596078 )
+position = Vector2( 2.38419e-07, 175.615 )
+scale = Vector2( 2.5, 6.63845 )
+texture = ExtResource( 3 )
+
+[node name="UnitList" type="Position2D" parent="."]
+position = Vector2( 0, -0.198425 )
+
+[node name="Sprite5" type="Sprite" parent="UnitList"]
+material = SubResource( 2 )
+texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="UnitList"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitList/Area2D"]
+shape = SubResource( 3 )
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="."]
+margin_left = -56.8278
+margin_top = -69.8338
+margin_right = 57.1722
+margin_bottom = -22.8338
+custom_fonts/normal_font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnitList2" type="Position2D" parent="."]
+position = Vector2( -38.5959, 82.9229 )
+script = ExtResource( 2 )
+dim_x = 2
+max_size = 10
+
+[node name="Sprite5" type="Sprite" parent="UnitList2"]
+material = SubResource( 5 )
+position = Vector2( 38.6199, 119.154 )
+scale = Vector2( 2.26177, 5.03842 )
+texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="UnitList2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitList2/Area2D"]
+position = Vector2( 38.0645, 119.299 )
+shape = SubResource( 6 )
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="UnitList2"]
+margin_left = 32.5914
+margin_top = -66.0609
+margin_right = 197.591
+margin_bottom = -19.0609
+custom_fonts/normal_font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="input_event" from="UnitList/Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="mouse_entered" from="UnitList/Area2D" to="." method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="UnitList/Area2D" to="." method="_on_Area2D_mouse_exited"]
+[connection signal="input_event" from="UnitList2/Area2D" to="UnitList2" method="_on_Area2D_input_event"]
+[connection signal="mouse_entered" from="UnitList2/Area2D" to="UnitList2" method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="UnitList2/Area2D" to="UnitList2" method="_on_Area2D_mouse_exited"]
